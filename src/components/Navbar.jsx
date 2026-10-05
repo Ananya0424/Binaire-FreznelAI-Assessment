@@ -16,11 +16,9 @@ const Navbar = () => {
       <div className="container mx-auto px-4 h-24 flex items-center justify-between">
         
         <div className="flex items-center gap-8">
-          {/* Logo mockup */}
-          <Link to="/" className="text-2xl font-bold text-white tracking-widest uppercase flex items-center gap-2">
+          <Link to="/" className="text-2xl font-bold text-white tracking-wider uppercase flex items-center gap-2">
             <span className="text-steam-blue text-3xl">🎥</span>
-            Freznel
-            <span className="font-light">Movies</span>
+            FREZNEL MOVIES
           </Link>
 
           {/* Desktop Links */}
