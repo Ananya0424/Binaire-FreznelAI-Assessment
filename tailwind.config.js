@@ -17,6 +17,15 @@ export default {
           text: '#c7d5e0',      // Default text color
           muted: '#8f98a0',     // Muted text
         }
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        }
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.6s ease-out forwards',
       }
     },
   },

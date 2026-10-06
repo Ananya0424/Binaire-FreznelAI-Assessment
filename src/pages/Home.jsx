@@ -1,13 +1,29 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import MovieCard from '../components/MovieCard';
 import { tmdb } from '../services/TMDBService';
+import { auth } from '../services/firebase';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [heroMovie, setHeroMovie] = useState(null);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const handleWishlistClick = () => {
+    if (!auth.currentUser) {
+      alert("Please login to add movies to your wishlist!");
+      navigate('/auth');
+    } else {
+      alert("Added to Wishlist successfully!");
+    }
+  };
+
+  const handlePlayClick = () => {
+    alert("Video playback is a premium feature. Coming soon!");
+  };
   
   const observer = useRef();
   
@@ -74,10 +90,14 @@ const Home = () => {
                   {heroMovie.overview}
                 </p>
                 <div className="flex items-center gap-4">
-                  <button className="bg-gradient-to-r from-steam-lightBlue to-steam-blue hover:from-steam-blue hover:to-white text-white px-8 py-3 rounded text-sm font-medium transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                  <button 
+                    onClick={handlePlayClick}
+                    className="bg-gradient-to-r from-steam-lightBlue to-steam-blue hover:from-steam-blue hover:to-white text-white px-8 py-3 rounded text-sm font-medium transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
                     Play Now
                   </button>
-                  <button className="bg-steam-panel border border-steam-muted hover:border-white text-white px-6 py-3 rounded text-sm font-medium transition-all hover:bg-steam-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue">
+                  <button 
+                    onClick={handleWishlistClick}
+                    className="bg-steam-panel border border-steam-muted hover:border-white text-white px-6 py-3 rounded text-sm font-medium transition-all hover:bg-steam-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue">
                     + Add to Wishlist
                   </button>
                 </div>
