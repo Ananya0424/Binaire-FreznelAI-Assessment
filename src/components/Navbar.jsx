@@ -3,10 +3,13 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Search, Download, ChevronDown } from 'lucide-react';
 import { auth } from '../services/firebase';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
+import { tmdb } from '../services/TMDBService';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -24,9 +27,26 @@ const Navbar = () => {
     navigate('/');
   };
 
+  useEffect(() => {
+    if (searchQuery.trim().length > 1) {
+      const timer = setTimeout(async () => {
+        const data = await tmdb.searchMovie(searchQuery);
+        if (data?.results) {
+          setSuggestions(data.results.filter(m => m.poster_path).slice(0, 5));
+          setShowSuggestions(true);
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, [searchQuery]);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      setShowSuggestions(false);
       navigate(`/?search=${encodeURIComponent(searchQuery)}`);
     }
   };
@@ -106,20 +126,51 @@ const Navbar = () => {
           </nav>
 
 
-          <form onSubmit={handleSearch} className="flex items-center h-[32px]">
-            <div className="bg-[#316282] border border-black/30 rounded-l px-3 h-full flex items-center focus-within:ring-1 focus-within:ring-[#66c0f4] transition-shadow">
-              <input 
-                type="text" 
-                placeholder="Search the store" 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent border-none text-white text-sm outline-none w-56 md:w-[280px] placeholder:italic placeholder-white/50"
-              />
-            </div>
-            <button type="submit" className="bg-[#66c0f4] hover:bg-[#417a9b] h-full px-3 rounded-r flex items-center justify-center transition-colors">
-              <Search className="w-5 h-5 text-[#171a21]" />
-            </button>
-          </form>
+          <div className="relative">
+            <form onSubmit={handleSearch} className="flex items-center h-[32px]">
+              <div className="bg-[#316282] border border-black/30 rounded-l px-3 h-full flex items-center focus-within:ring-1 focus-within:ring-[#66c0f4] transition-shadow">
+                <input 
+                  type="text" 
+                  placeholder="Search the store" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => { if (suggestions.length > 0) setShowSuggestions(true); }}
+                  onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                  className="bg-transparent border-none text-white text-sm outline-none w-56 md:w-[280px] placeholder:italic placeholder-white/50"
+                />
+              </div>
+              <button type="submit" className="bg-[#66c0f4] hover:bg-[#417a9b] h-full px-3 rounded-r flex items-center justify-center transition-colors">
+                <Search className="w-5 h-5 text-[#171a21]" />
+              </button>
+            </form>
+
+            {/* Live Search Suggestions Dropdown */}
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute top-full right-0 w-full mt-1 bg-[#3d4450] shadow-2xl rounded overflow-hidden z-[9999] border border-black/50">
+                {suggestions.map((movie) => (
+                  <div 
+                    key={movie.id}
+                    onClick={() => {
+                      setSearchQuery(movie.title);
+                      setShowSuggestions(false);
+                      navigate(`/?search=${encodeURIComponent(movie.title)}`);
+                    }}
+                    className="flex items-center gap-3 p-2 hover:bg-[#1b2838] cursor-pointer border-b border-black/20 last:border-0 transition-colors"
+                  >
+                    <img 
+                      src={tmdb.getImageUrl(movie.poster_path)} 
+                      alt="" 
+                      className="w-8 h-10 object-cover rounded shadow-sm"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-white text-sm truncate font-medium">{movie.title}</p>
+                      <p className="text-steam-muted text-xs">{movie.release_date?.split('-')[0]}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
         </div>
       </div>
