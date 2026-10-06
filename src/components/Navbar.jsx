@@ -13,7 +13,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Helper function to check active state
   const isActive = (path) => location.pathname === path;
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
