@@ -24,7 +24,7 @@ const Navbar = () => {
     <header className="w-full flex flex-col font-sans relative z-50">
       {/* Top Global Bar */}
       <div className="bg-[#171a21] w-full">
-        <div className="container mx-auto px-4 max-w-5xl flex items-center justify-between h-[104px]">
+        <div className="w-full px-6 lg:px-20 max-w-[1400px] mx-auto flex items-center justify-between h-[104px]">
           
           {/* Logo & Main Links */}
           <div className="flex items-center gap-10">
@@ -68,7 +68,7 @@ const Navbar = () => {
 
       {/* Sub Navigation Bar */}
       <div className="w-full shadow-lg" style={{ background: 'linear-gradient(to right, #202d39 0%, #111620 100%)' }}>
-        <div className="container mx-auto px-4 max-w-5xl h-9 flex items-center justify-between">
+        <div className="w-full px-6 lg:px-20 max-w-[1400px] mx-auto h-9 flex items-center justify-between">
           
           {/* Sub Links */}
           <nav className="flex items-center gap-4 md:gap-6 text-[13px] text-white font-medium">
