@@ -123,14 +123,15 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 text-white space-y-8 pb-12">
-        <section aria-label="Featured Movie">
+      <div className="text-white pb-12 w-full">
+        {/* Full width Hero Section */}
+        <section aria-label="Featured Movie" className="w-full">
           {!heroMovie ? (
-            <div className="bg-steam-panel w-full h-[400px] rounded animate-pulse border border-steam-lightBlue/20" />
+            <div className="bg-steam-panel w-full h-[400px] md:h-[550px] animate-pulse border-b border-steam-lightBlue/20" />
           ) : (
             <div 
               key={heroMovie.id}
-              className="relative w-full h-[400px] md:h-[500px] rounded overflow-hidden group border border-steam-lightBlue/20 hover:border-steam-blue transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue animate-fade-in"
+              className="relative w-full h-[400px] md:h-[600px] group border-b border-steam-lightBlue/20 hover:border-steam-blue transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue animate-fade-in"
               tabIndex="0"
               aria-label={`Featured movie: ${heroMovie.title}`}
             >
@@ -139,12 +140,12 @@ const Home = () => {
                 alt={heroMovie.title}
                 className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-steam-bg via-steam-bg/80 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-t from-steam-bg via-transparent to-transparent opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#1b2838] via-[#1b2838]/80 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1b2838] via-transparent to-transparent opacity-90" />
               
-              <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full md:w-2/3">
-                <h1 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">{heroMovie.title}</h1>
-                <p className="text-steam-text text-sm md:text-base line-clamp-3 mb-6 max-w-xl">
+              <div className="absolute bottom-0 left-0 p-8 md:p-16 w-full md:w-1/2 max-w-[1400px] mx-auto right-0">
+                <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg text-white">{heroMovie.title}</h1>
+                <p className="text-[#acb2b8] text-sm md:text-lg line-clamp-3 mb-8 max-w-xl">
                   {heroMovie.overview}
                 </p>
                 <div className="flex items-center gap-4">
@@ -170,7 +171,9 @@ const Home = () => {
           )}
         </section>
 
-        <section aria-label="Popular Movies">
+        {/* Constrained width for grid */}
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8 space-y-8 mt-12">
+          <section aria-label="Popular Movies">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-light tracking-wide uppercase text-steam-text">Popular Titles</h2>
           </div>
@@ -274,7 +277,7 @@ const Home = () => {
             </div>
           </div>
         )}
-
+        </div>
       </div>
     </Layout>
   );
