@@ -17,14 +17,19 @@ const AuthPage = () => {
     setLoading(true);
 
     try {
+      const trimmedPassword = password.trim();
       if (isLogin) {
-        await signInWithEmailAndPassword(auth, email, password);
+        await signInWithEmailAndPassword(auth, email, trimmedPassword);
       } else {
-        await createUserWithEmailAndPassword(auth, email, password);
+        await createUserWithEmailAndPassword(auth, email, trimmedPassword);
       }
       navigate('/');
     } catch (err) {
-      setError(err.message.replace('Firebase: ', ''));
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
+        setError('Incorrect password');
+      } else {
+        setError(err.message.replace('Firebase: ', ''));
+      }
     } finally {
       setLoading(false);
     }
@@ -64,7 +69,7 @@ const AuthPage = () => {
               type="password" 
               className="bg-steam-dark text-white p-3 rounded focus:outline-none focus:ring-1 focus:ring-steam-blue transition-all"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value.trim())}
               required
             />
           </div>
