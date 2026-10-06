@@ -2,21 +2,29 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import { tmdb } from '../services/TMDBService';
 import MovieCard from '../components/MovieCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const NewReleases = () => {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  
+  const title = searchParams.get('title') || 'New Releases';
+  const query = searchParams.get('q') || '';
 
   useEffect(() => {
-    // Fetch trending/new movies
-    tmdb.getTrending().then(data => {
-      if (data?.results) setMovies(data.results);
-    });
-  }, []);
+    if (query) {
+      tmdb.searchMovie(query).then(data => {
+        if (data?.results) setMovies(data.results);
+      });
+    } else {
+      tmdb.getTrending().then(data => {
+        if (data?.results) setMovies(data.results);
+      });
+    }
+  }, [query]);
 
   const handleMovieSelect = (movie) => {
-    // Navigate back to home with the movie in search/state, or just go home
     navigate(`/?search=${encodeURIComponent(movie.title)}`);
   };
 
@@ -27,16 +35,16 @@ const NewReleases = () => {
         <div className="text-[#8f98a0] text-xs mb-2 flex items-center gap-1">
           <span className="hover:text-white cursor-pointer transition-colors">All Products</span>
           <span>{'>'}</span>
-          <span className="text-white">New Releases</span>
+          <span className="text-white">{title}</span>
         </div>
         
         {/* Heading */}
-        <h1 className="text-3xl text-white font-bold mb-6 tracking-wide">New Releases</h1>
+        <h1 className="text-3xl text-white font-bold mb-6 tracking-wide">{title}</h1>
         
         {/* Movie Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-12">
-          {movies.map(movie => (
-            <MovieCard key={movie.id} movie={movie} onSelect={handleMovieSelect} />
+          {movies.map((movie, index) => (
+            <MovieCard key={`${movie.id}-${index}`} movie={movie} onSelect={handleMovieSelect} />
           ))}
         </div>
       </div>

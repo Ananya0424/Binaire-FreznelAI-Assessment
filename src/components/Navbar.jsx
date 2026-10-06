@@ -83,10 +83,10 @@ const Navbar = () => {
           {/* Sub Links */}
           <nav className="flex items-center gap-4 md:gap-6 text-[13px] text-white font-medium">
             <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Browse <ChevronDown className="w-3 h-3" /></Link>
-            <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Recommendations <ChevronDown className="w-3 h-3" /></Link>
-            <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Categories <ChevronDown className="w-3 h-3" /></Link>
-            <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Ways to Play <ChevronDown className="w-3 h-3" /></Link>
-            <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Special Sections <ChevronDown className="w-3 h-3" /></Link>
+            <Link to="/explore/new?title=Recommendations&q=best" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Recommendations <ChevronDown className="w-3 h-3" /></Link>
+            <Link to="/explore/new?title=Horror%20%26%20Action&q=horror" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Categories <ChevronDown className="w-3 h-3" /></Link>
+            <Link to="/explore/new?title=Ways%20to%20Play&q=game" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Ways to Play <ChevronDown className="w-3 h-3" /></Link>
+            <Link to="/explore/new?title=Special%20Sections&q=collection" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Special Sections <ChevronDown className="w-3 h-3" /></Link>
           </nav>
 
           {/* Search Box */}
