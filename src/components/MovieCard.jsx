@@ -3,6 +3,7 @@ import { tmdb } from '../services/TMDBService';
 import { auth } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
+import { wishlistStorage } from '../services/StorageService';
 
 const MovieCard = ({ movie, onSelect }) => {
   const navigate = useNavigate();
@@ -14,8 +15,7 @@ const MovieCard = ({ movie, onSelect }) => {
         setIsWishlisted(false);
         return;
       }
-      const list = JSON.parse(localStorage.getItem(`wishlist_${user.uid}`) || '[]');
-      setIsWishlisted(list.some(m => m.id === movie.id));
+      setIsWishlisted(wishlistStorage.has(user.uid, movie.id));
     };
 
     const unsubscribe = onAuthStateChanged(auth, checkWishlist);
@@ -84,11 +84,7 @@ const MovieCard = ({ movie, onSelect }) => {
               onClick={(e) => {
                 e.stopPropagation();
                 if (!auth.currentUser) return;
-                const uid = auth.currentUser.uid;
-                const key = `wishlist_${uid}`;
-                const currentList = JSON.parse(localStorage.getItem(key) || '[]');
-                const updated = currentList.filter(m => m.id !== movie.id);
-                localStorage.setItem(key, JSON.stringify(updated));
+                wishlistStorage.remove(auth.currentUser.uid, movie.id);
                 window.dispatchEvent(new CustomEvent('showToast', { detail: "Removed from Wishlist!" }));
                 window.dispatchEvent(new Event('wishlistUpdated'));
               }}
@@ -104,12 +100,9 @@ const MovieCard = ({ movie, onSelect }) => {
                   navigate('/login');
                   return;
                 }
-                const uid = auth.currentUser.uid;
-                const key = `wishlist_${uid}`;
-                const currentList = JSON.parse(localStorage.getItem(key) || '[]');
+                const added = wishlistStorage.add(auth.currentUser.uid, movie);
                 
-                if (!currentList.some(m => m.id === movie.id)) {
-                  localStorage.setItem(key, JSON.stringify([...currentList, movie]));
+                if (added) {
                   window.dispatchEvent(new CustomEvent('showToast', { detail: "Added to your Wishlist!" }));
                   window.dispatchEvent(new Event('wishlistUpdated'));
                 }

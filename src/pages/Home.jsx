@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import MovieCard from '../components/MovieCard';
 import { tmdb } from '../services/TMDBService';
 import { auth } from '../services/firebase';
+import { wishlistStorage } from '../services/StorageService';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -25,8 +26,7 @@ const Home = () => {
         setIsHeroWishlisted(false);
         return;
       }
-      const list = JSON.parse(localStorage.getItem(`wishlist_${auth.currentUser.uid}`) || '[]');
-      setIsHeroWishlisted(list.some(m => m.id === heroMovie.id));
+      setIsHeroWishlisted(wishlistStorage.has(auth.currentUser.uid, heroMovie.id));
     };
     checkWishlist();
     window.addEventListener('wishlistUpdated', checkWishlist);
@@ -39,11 +39,7 @@ const Home = () => {
 
   const handleRemoveWishlist = () => {
     if (!auth.currentUser || !heroMovie) return;
-    const uid = auth.currentUser.uid;
-    const key = `wishlist_${uid}`;
-    const currentList = JSON.parse(localStorage.getItem(key) || '[]');
-    const updated = currentList.filter(m => m.id !== heroMovie.id);
-    localStorage.setItem(key, JSON.stringify(updated));
+    wishlistStorage.remove(auth.currentUser.uid, heroMovie.id);
     showToast("Removed from Wishlist!");
     window.dispatchEvent(new Event('wishlistUpdated'));
   };
@@ -53,12 +49,9 @@ const Home = () => {
       navigate('/login');
       return;
     }
-    const uid = auth.currentUser.uid;
-    const key = `wishlist_${uid}`;
-    const currentList = JSON.parse(localStorage.getItem(key) || '[]');
+    const added = wishlistStorage.add(auth.currentUser.uid, heroMovie);
     
-    if (!currentList.some(m => m.id === heroMovie.id)) {
-      localStorage.setItem(key, JSON.stringify([...currentList, heroMovie]));
+    if (added) {
       showToast("Added to your Wishlist!");
       window.dispatchEvent(new Event('wishlistUpdated'));
     } else {

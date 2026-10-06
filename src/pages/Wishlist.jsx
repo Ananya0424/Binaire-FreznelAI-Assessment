@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 import MovieCard from '../components/MovieCard';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../services/firebase';
+import { wishlistStorage } from '../services/StorageService';
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -14,8 +15,7 @@ const Wishlist = () => {
       if (!user) {
         navigate('/login');
       } else {
-
-        const savedList = JSON.parse(localStorage.getItem(`wishlist_${user.uid}`) || '[]');
+        const savedList = wishlistStorage.get(user.uid);
         setWishlist(savedList.filter(m => m.poster_path || m.backdrop_path));
       }
     });
