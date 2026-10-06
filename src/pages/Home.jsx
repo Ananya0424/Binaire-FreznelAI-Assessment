@@ -64,18 +64,21 @@ const Home = () => {
       if (searchQuery) {
         const searchData = await tmdb.searchMovie(searchQuery);
         if (searchData?.results?.length > 0) {
-          setHeroMovie(searchData.results[0]);
+          const validHeroes = searchData.results.filter(m => m.backdrop_path);
+          if (validHeroes.length > 0) setHeroMovie(validHeroes[0]);
         }
       } else if (!heroMovie) {
         const trendingData = await tmdb.getTrending();
         if (trendingData?.results) {
-          setHeroMovie(trendingData.results[0]);
+          const validHeroes = trendingData.results.filter(m => m.backdrop_path);
+          if (validHeroes.length > 0) setHeroMovie(validHeroes[0]);
         }
       }
 
       const popularData = await tmdb.getPopular(page);
       if (popularData?.results) {
-        setMovies(prev => page === 1 ? popularData.results : [...prev, ...popularData.results]);
+        const validMovies = popularData.results.filter(m => m.poster_path || m.backdrop_path);
+        setMovies(prev => page === 1 ? validMovies : [...prev, ...validMovies]);
       }
       
       setLoading(false);

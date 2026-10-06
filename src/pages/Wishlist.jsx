@@ -16,7 +16,7 @@ const Wishlist = () => {
       } else {
 
         const savedList = JSON.parse(localStorage.getItem(`wishlist_${user.uid}`) || '[]');
-        setWishlist(savedList);
+        setWishlist(savedList.filter(m => m.poster_path || m.backdrop_path));
       }
     });
     return () => unsubscribe();

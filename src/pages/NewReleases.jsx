@@ -15,11 +15,11 @@ const NewReleases = () => {
   useEffect(() => {
     if (query) {
       tmdb.searchMovie(query).then(data => {
-        if (data?.results) setMovies(data.results);
+        if (data?.results) setMovies(data.results.filter(m => m.poster_path || m.backdrop_path));
       });
     } else {
       tmdb.getTrending().then(data => {
-        if (data?.results) setMovies(data.results);
+        if (data?.results) setMovies(data.results.filter(m => m.poster_path || m.backdrop_path));
       });
     }
   }, [query]);
