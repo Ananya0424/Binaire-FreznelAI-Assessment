@@ -6,6 +6,7 @@ import { signOut, onAuthStateChanged } from 'firebase/auth';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,11 +21,18 @@ const Navbar = () => {
     navigate('/');
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
   return (
     <header className="w-full flex flex-col font-sans relative z-50">
       {/* Top Global Bar */}
       <div className="bg-[#171a21] w-full">
-        <div className="w-full px-6 lg:px-20 max-w-[1400px] mx-auto flex items-center justify-between h-[104px]">
+        <div className="w-full px-4 md:px-8 flex items-center justify-between h-[104px]">
           
           {/* Logo & Main Links */}
           <div className="flex items-center gap-10">
@@ -55,7 +63,7 @@ const Navbar = () => {
                   <button onClick={handleLogout} className="hover:text-white cursor-pointer lowercase">logout</button>
                 </>
               ) : (
-                <Link to="/auth" className="hover:text-white lowercase">login</Link>
+                <Link to="/login" className="hover:text-white lowercase">login</Link>
               )}
               <span>|</span>
               <span className="hover:text-white cursor-pointer flex items-center gap-1 lowercase">
@@ -68,7 +76,7 @@ const Navbar = () => {
 
       {/* Sub Navigation Bar */}
       <div className="w-full shadow-lg" style={{ background: 'linear-gradient(to right, #202d39 0%, #111620 100%)' }}>
-        <div className="w-full px-6 lg:px-20 max-w-[1400px] mx-auto h-9 flex items-center justify-between">
+        <div className="w-full px-4 md:px-8 h-9 flex items-center justify-between">
           
           {/* Sub Links */}
           <nav className="flex items-center gap-4 md:gap-6 text-[13px] text-white font-medium">
@@ -80,18 +88,20 @@ const Navbar = () => {
           </nav>
 
           {/* Search Box */}
-          <div className="flex items-center h-[26px]">
+          <form onSubmit={handleSearch} className="flex items-center h-[26px]">
             <div className="bg-[#316282] border border-black/30 rounded-l px-3 h-full flex items-center focus-within:ring-1 focus-within:ring-[#66c0f4] transition-shadow">
               <input 
                 type="text" 
                 placeholder="Search the store" 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-transparent border-none text-white text-sm outline-none w-48 placeholder:italic placeholder-white/50"
               />
             </div>
-            <button className="bg-[#66c0f4] hover:bg-[#417a9b] h-full px-2 rounded-r flex items-center justify-center transition-colors">
+            <button type="submit" className="bg-[#66c0f4] hover:bg-[#417a9b] h-full px-2 rounded-r flex items-center justify-center transition-colors">
               <Search className="w-4 h-4 text-[#171a21]" />
             </button>
-          </div>
+          </form>
 
         </div>
       </div>

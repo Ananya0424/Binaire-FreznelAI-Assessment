@@ -31,6 +31,11 @@ class TMDBService {
     return this._fetchData(`/movie/popular?page=${page}`);
   }
 
+  async searchMovie(query) {
+    if (!query) return null;
+    return this._fetchData(`/search/movie?query=${encodeURIComponent(query)}&page=1`);
+  }
+
   getImageUrl(path, isHero = false) {
     if (!path) return '';
     return isHero ? `${this.heroImageBaseUrl}${path}` : `${this.imageBaseUrl}${path}`;

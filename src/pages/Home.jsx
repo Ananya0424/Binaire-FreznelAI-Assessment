@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import MovieCard from '../components/MovieCard';
 import { tmdb } from '../services/TMDBService';
@@ -11,11 +11,13 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search');
 
   const handleWishlistClick = () => {
     if (!auth.currentUser) {
       alert("Please login to add movies to your wishlist!");
-      navigate('/auth');
+      navigate('/login');
     } else {
       alert("Added to Wishlist successfully!");
     }
@@ -44,7 +46,12 @@ const Home = () => {
     const fetchMovies = async () => {
       setLoading(true);
       
-      if (!heroMovie) {
+      if (searchQuery) {
+        const searchData = await tmdb.searchMovie(searchQuery);
+        if (searchData?.results?.length > 0) {
+          setHeroMovie(searchData.results[0]);
+        }
+      } else if (!heroMovie) {
         const trendingData = await tmdb.getTrending();
         if (trendingData?.results) {
           setHeroMovie(trendingData.results[0]);
@@ -53,14 +60,14 @@ const Home = () => {
 
       const popularData = await tmdb.getPopular(page);
       if (popularData?.results) {
-        setMovies(prev => [...prev, ...popularData.results]);
+        setMovies(prev => page === 1 ? popularData.results : [...prev, ...popularData.results]);
       }
       
       setLoading(false);
     };
 
     fetchMovies();
-  }, [page]);
+  }, [page, searchQuery]);
 
   return (
     <Layout>
