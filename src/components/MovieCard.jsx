@@ -19,12 +19,19 @@ const MovieCard = ({ movie, onSelect }) => {
       }}
     >
 
-      <img 
-        src={tmdb.getImageUrl(movie.poster_path)} 
-        alt={movie.title}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        loading="lazy"
-      />
+      {tmdb.getImageUrl(movie.poster_path || movie.backdrop_path) ? (
+        <img 
+          src={tmdb.getImageUrl(movie.poster_path || movie.backdrop_path)} 
+          alt={movie.title}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+        />
+      ) : (
+        <div className="absolute inset-0 w-full h-full bg-[#2a475e] flex flex-col items-center justify-center p-4 text-center">
+          <span className="text-4xl opacity-50 mb-2">🎥</span>
+          <span className="text-white text-sm font-bold opacity-80 leading-tight">{movie.title}</span>
+        </div>
+      )}
 
 
       <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/90 to-transparent group-hover:opacity-0 transition-opacity duration-300 flex items-end justify-between p-2">
