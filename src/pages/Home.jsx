@@ -9,6 +9,7 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const [heroMovie, setHeroMovie] = useState(null);
   const [pendingAgeCheck, setPendingAgeCheck] = useState(null);
+  const [birthYear, setBirthYear] = useState('2026');
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -89,10 +90,15 @@ const Home = () => {
   };
 
   const confirmAge = () => {
-    if (pendingAgeCheck) {
-      setHeroMovie(pendingAgeCheck);
-      setPendingAgeCheck(null);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    const calculatedAge = 2026 - parseInt(birthYear);
+    if (calculatedAge >= 18) {
+      if (pendingAgeCheck) {
+        setHeroMovie(pendingAgeCheck);
+        setPendingAgeCheck(null);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      showToast("You must be 18 or older to view this content.");
     }
   };
 
@@ -173,9 +179,21 @@ const Home = () => {
               <div className="bg-[#2a475e]/30 w-full p-8 rounded border border-[#2a475e] mb-6 shadow-xl">
                 <p className="text-[#acb2b8] mb-4 text-sm">Please enter your birth date to continue:</p>
                 <div className="flex justify-center gap-2 mb-8">
-                  <select className="bg-[#316282] text-white border-none p-1.5 rounded w-16 outline-none text-sm"><option>1</option></select>
-                  <select className="bg-[#316282] text-white border-none p-1.5 rounded w-32 outline-none text-sm"><option>January</option></select>
-                  <select className="bg-[#316282] text-white border-none p-1.5 rounded w-24 outline-none text-sm"><option>2026</option><option>2000</option></select>
+                  <select className="bg-[#316282] text-white border-none p-1.5 rounded w-16 outline-none text-sm">
+                    {Array.from({length: 31}, (_, i) => <option key={i+1}>{i+1}</option>)}
+                  </select>
+                  <select className="bg-[#316282] text-white border-none p-1.5 rounded w-32 outline-none text-sm">
+                    {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(m => <option key={m}>{m}</option>)}
+                  </select>
+                  <select 
+                    value={birthYear}
+                    onChange={(e) => setBirthYear(e.target.value)}
+                    className="bg-[#316282] text-white border-none p-1.5 rounded w-24 outline-none text-sm"
+                  >
+                    {Array.from({length: 40}, (_, i) => 2026 - i).map(year => (
+                      <option key={year} value={year}>{year}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="flex justify-center gap-4">
                   <button onClick={confirmAge} className="bg-[#2a475e] hover:bg-[#66c0f4] text-white px-6 py-2 rounded transition-colors text-sm font-medium">View Page</button>
