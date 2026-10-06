@@ -1,6 +1,6 @@
-# Freznel AI - Frontend Assessment
+# Freznel  - Frontend Assessment
 
-Hi! This is my submission for the Freznel AI frontend developer assessment. I have built a web application inspired by Steam's design, using real movie data.
+Hi! This is my submission for the Freznel frontend developer assessment. I have built a web application inspired by Steam's design, using real movie data.
 
 ## Features I Added
 - **Authentication:** Used Firebase for Email/Password login and signup.
@@ -25,4 +25,4 @@ Hi! This is my submission for the Freznel AI frontend developer assessment. I ha
 4. Open `http://localhost:5173` in your browser
 
 ---
-*Created as part of the Freznel AI Assessment.*
+*Created as part of the Freznel Assessment.*
