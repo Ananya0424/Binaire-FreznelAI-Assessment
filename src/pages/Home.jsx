@@ -17,11 +17,8 @@ const Home = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search');
-  const [toastMessage, setToastMessage] = useState(null);
-
   const showToast = (msg) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
+    window.dispatchEvent(new CustomEvent('showToast', { detail: msg }));
   };
 
   const handleWishlistClick = () => {
@@ -252,12 +249,6 @@ const Home = () => {
           </div>
         )}
 
-
-        {toastMessage && (
-          <div className="fixed top-24 right-4 bg-steam-panel border-l-4 border-[#66c0f4] text-white p-4 shadow-2xl rounded z-[9999] animate-slide-in-right">
-            {toastMessage}
-          </div>
-        )}
       </div>
     </Layout>
   );
