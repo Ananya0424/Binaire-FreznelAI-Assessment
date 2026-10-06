@@ -106,18 +106,18 @@ const Navbar = () => {
           </nav>
 
 
-          <form onSubmit={handleSearch} className="flex items-center h-[26px]">
+          <form onSubmit={handleSearch} className="flex items-center h-[32px]">
             <div className="bg-[#316282] border border-black/30 rounded-l px-3 h-full flex items-center focus-within:ring-1 focus-within:ring-[#66c0f4] transition-shadow">
               <input 
                 type="text" 
                 placeholder="Search the store" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent border-none text-white text-sm outline-none w-48 placeholder:italic placeholder-white/50"
+                className="bg-transparent border-none text-white text-sm outline-none w-56 md:w-[280px] placeholder:italic placeholder-white/50"
               />
             </div>
-            <button type="submit" className="bg-[#66c0f4] hover:bg-[#417a9b] h-full px-2 rounded-r flex items-center justify-center transition-colors">
-              <Search className="w-4 h-4 text-[#171a21]" />
+            <button type="submit" className="bg-[#66c0f4] hover:bg-[#417a9b] h-full px-3 rounded-r flex items-center justify-center transition-colors">
+              <Search className="w-5 h-5 text-[#171a21]" />
             </button>
           </form>
 
