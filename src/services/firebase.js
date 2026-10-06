@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBUMG3s53h7m3beR6lZdLuk80NsUjUOJgA",
-  authDomain: "freznel-movies.firebaseapp.com",
-  projectId: "freznel-movies",
-  storageBucket: "freznel-movies.firebasestorage.app",
-  messagingSenderId: "564698022576",
-  appId: "1:564698022576:web:dd7736dee780b77c047175"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);

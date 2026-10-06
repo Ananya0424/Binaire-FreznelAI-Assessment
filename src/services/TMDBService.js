@@ -1,6 +1,6 @@
 class TMDBService {
   constructor() {
-    this.apiKey = '8d9875207e45b45e692982a10d53e9e6';
+    this.apiKey = import.meta.env.VITE_TMDB_API_KEY;
     this.baseUrl = 'https://api.themoviedb.org/3';
     this.imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
     this.heroImageBaseUrl = 'https://image.tmdb.org/t/p/original';
