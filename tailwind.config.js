@@ -22,10 +22,15 @@ export default {
         fadeIn: {
           '0%': { opacity: '0', transform: 'translateY(10px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideInRight: {
+          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
         }
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-out forwards',
+        'slide-in-right': 'slideInRight 0.3s ease-out forwards',
       }
     },
   },

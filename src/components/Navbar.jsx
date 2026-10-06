@@ -60,6 +60,8 @@ const Navbar = () => {
                 <>
                   <span className="text-[#b8b6b4] lowercase">{user.email}</span>
                   <span>|</span>
+                  <Link to="/wishlist" className="hover:text-white cursor-pointer lowercase font-bold text-[#66c0f4]">wishlist</Link>
+                  <span>|</span>
                   <button onClick={handleLogout} className="hover:text-white cursor-pointer lowercase">logout</button>
                 </>
               ) : (
@@ -81,10 +83,10 @@ const Navbar = () => {
           {/* Sub Links */}
           <nav className="flex items-center gap-4 md:gap-6 text-[13px] text-white font-medium">
             <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Browse <ChevronDown className="w-3 h-3" /></Link>
-            <div className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Recommendations <ChevronDown className="w-3 h-3" /></div>
-            <div className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Categories <ChevronDown className="w-3 h-3" /></div>
-            <div className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Ways to Play <ChevronDown className="w-3 h-3" /></div>
-            <div className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Special Sections <ChevronDown className="w-3 h-3" /></div>
+            <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Recommendations <ChevronDown className="w-3 h-3" /></Link>
+            <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Categories <ChevronDown className="w-3 h-3" /></Link>
+            <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Ways to Play <ChevronDown className="w-3 h-3" /></Link>
+            <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Special Sections <ChevronDown className="w-3 h-3" /></Link>
           </nav>
 
           {/* Search Box */}

@@ -14,18 +14,32 @@ const Home = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search');
+  const [toastMessage, setToastMessage] = useState(null);
+
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
 
   const handleWishlistClick = () => {
     if (!auth.currentUser) {
-      alert("Please login to add movies to your wishlist!");
       navigate('/login');
+      return;
+    }
+    const uid = auth.currentUser.uid;
+    const key = `wishlist_${uid}`;
+    const currentList = JSON.parse(localStorage.getItem(key) || '[]');
+    
+    if (!currentList.some(m => m.id === heroMovie.id)) {
+      localStorage.setItem(key, JSON.stringify([...currentList, heroMovie]));
+      showToast("Added to your Wishlist!");
     } else {
-      alert("Added to Wishlist successfully!");
+      showToast("Already in your Wishlist!");
     }
   };
 
   const handlePlayClick = () => {
-    alert("Video playback is a premium feature. Coming soon!");
+    showToast("Video playback is a premium feature!");
   };
   
   const observer = useRef();
@@ -172,6 +186,12 @@ const Home = () => {
           </div>
         )}
 
+        {/* Toast Notification */}
+        {toastMessage && (
+          <div className="fixed top-24 right-4 bg-steam-panel border-l-4 border-[#66c0f4] text-white p-4 shadow-2xl rounded z-[9999] animate-slide-in-right">
+            {toastMessage}
+          </div>
+        )}
       </div>
     </Layout>
   );
