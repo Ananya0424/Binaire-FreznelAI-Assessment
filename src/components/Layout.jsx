@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
       <NetworkStatus />
       <Navbar />
       
-      <main className="flex-1 w-full animate-fade-in" role="main">
+      <main className="flex-1 w-full" role="main">
         {children}
       </main>
       

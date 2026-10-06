@@ -28,7 +28,7 @@ const Wishlist = () => {
 
   return (
     <Layout>
-      <div className="max-w-5xl mx-auto pt-4">
+      <div className="max-w-5xl mx-auto pt-4 animate-fade-in">
 
         <div className="text-[#8f98a0] text-xs mb-2 flex items-center gap-1">
           <span onClick={() => navigate('/')} className="hover:text-white cursor-pointer transition-colors">Home</span>

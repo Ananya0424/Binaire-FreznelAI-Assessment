@@ -30,7 +30,7 @@ const NewReleases = () => {
 
   return (
     <Layout>
-      <div className="max-w-5xl mx-auto pt-4">
+      <div className="max-w-5xl mx-auto pt-4 animate-fade-in">
         {/* Breadcrumb */}
         <div className="text-[#8f98a0] text-xs mb-2 flex items-center gap-1">
           <span className="hover:text-white cursor-pointer transition-colors">All Products</span>
