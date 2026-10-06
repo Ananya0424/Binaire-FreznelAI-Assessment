@@ -68,9 +68,16 @@ const Navbar = () => {
                 <Link to="/login" className="hover:text-white lowercase">login</Link>
               )}
               <span>|</span>
-              <span className="hover:text-white cursor-pointer flex items-center gap-1 lowercase">
-                language <ChevronDown className="w-3 h-3" />
-              </span>
+              <div className="group relative">
+                <span className="hover:text-white cursor-pointer flex items-center gap-1 lowercase">
+                  language <ChevronDown className="w-3 h-3" />
+                </span>
+                <div className="absolute right-0 top-full mt-2 w-32 bg-[#3d4450] text-[#b8b6b4] shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 rounded">
+                  <div className="px-4 py-2 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-xs font-bold text-white bg-[#1b2838]">
+                    English
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
