@@ -52,10 +52,6 @@ const Navbar = () => {
           {/* Top Right Actions */}
           <div className="flex flex-col items-end gap-1 h-full pt-2">
             <div className="flex items-center text-[11px] text-[#b8b6b4] gap-3">
-              <a href="#" className="bg-[#5c7e10] hover:bg-[#7ca916] text-white px-3 py-1 flex items-center gap-2 transition-colors">
-                <Download className="w-3 h-3" />
-                Install Steam
-              </a>
               {user ? (
                 <>
                   <span className="text-[#b8b6b4] lowercase">{user.email}</span>
