@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Search, Download, ChevronDown } from 'lucide-react';
 import { auth } from '../services/firebase';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
@@ -8,7 +8,10 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
+  // Helper function to check active state
+  const isActive = (path) => location.pathname === path;
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -42,10 +45,10 @@ const Navbar = () => {
             </Link>
             
             <nav className="hidden md:flex items-center gap-6 mt-1 font-semibold text-[15px] uppercase">
-              <Link to="/" className="text-white border-b-2 border-[#1a9fff] pb-1">Store</Link>
-              <Link to="/community" className="text-[#b8b6b4] hover:text-white cursor-pointer transition-colors pb-1">Community</Link>
-              <Link to="/about" className="text-[#b8b6b4] hover:text-white cursor-pointer transition-colors pb-1">About</Link>
-              <Link to="/support" className="text-[#b8b6b4] hover:text-white cursor-pointer transition-colors pb-1">Support</Link>
+              <Link to="/" className={`pb-1 border-b-2 transition-colors ${isActive('/') ? 'text-white border-[#1a9fff]' : 'text-[#b8b6b4] hover:text-white border-transparent'}`}>Store</Link>
+              <Link to="/community" className={`pb-1 border-b-2 transition-colors ${isActive('/community') ? 'text-white border-[#1a9fff]' : 'text-[#b8b6b4] hover:text-white border-transparent'}`}>Community</Link>
+              <Link to="/about" className={`pb-1 border-b-2 transition-colors ${isActive('/about') ? 'text-white border-[#1a9fff]' : 'text-[#b8b6b4] hover:text-white border-transparent'}`}>About</Link>
+              <Link to="/support" className={`pb-1 border-b-2 transition-colors ${isActive('/support') ? 'text-white border-[#1a9fff]' : 'text-[#b8b6b4] hover:text-white border-transparent'}`}>Support</Link>
             </nav>
           </div>
 
