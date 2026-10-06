@@ -1,7 +1,11 @@
 import React from 'react';
 import { tmdb } from '../services/TMDBService';
+import { auth } from '../services/firebase';
+import { useNavigate } from 'react-router-dom';
 
 const MovieCard = ({ movie, onSelect }) => {
+  const navigate = useNavigate();
+
   if (!movie) return null;
 
   return (
@@ -48,8 +52,21 @@ const MovieCard = ({ movie, onSelect }) => {
           <button 
             className="bg-[#66c0f4] hover:bg-[#417a9b] text-white text-[10px] font-medium px-2 py-1 rounded transition-colors"
             onClick={(e) => {
-              e.stopPropagation(); // prevent clicking the card itself
-              alert("Feature coming soon!");
+              e.stopPropagation();
+              if (!auth.currentUser) {
+                navigate('/login');
+                return;
+              }
+              const uid = auth.currentUser.uid;
+              const key = `wishlist_${uid}`;
+              const currentList = JSON.parse(localStorage.getItem(key) || '[]');
+              
+              if (!currentList.some(m => m.id === movie.id)) {
+                localStorage.setItem(key, JSON.stringify([...currentList, movie]));
+                window.dispatchEvent(new CustomEvent('showToast', { detail: "Added to your Wishlist!" }));
+              } else {
+                window.dispatchEvent(new CustomEvent('showToast', { detail: "Already in your Wishlist!" }));
+              }
             }}
           >
             + Wishlist
