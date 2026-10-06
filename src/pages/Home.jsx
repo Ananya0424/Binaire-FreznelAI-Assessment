@@ -17,6 +17,22 @@ const Home = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search');
+  const [isHeroWishlisted, setIsHeroWishlisted] = useState(false);
+
+  useEffect(() => {
+    const checkWishlist = () => {
+      if (!auth.currentUser || !heroMovie) {
+        setIsHeroWishlisted(false);
+        return;
+      }
+      const list = JSON.parse(localStorage.getItem(`wishlist_${auth.currentUser.uid}`) || '[]');
+      setIsHeroWishlisted(list.some(m => m.id === heroMovie.id));
+    };
+    checkWishlist();
+    window.addEventListener('wishlistUpdated', checkWishlist);
+    return () => window.removeEventListener('wishlistUpdated', checkWishlist);
+  }, [heroMovie, auth.currentUser]);
+
   const showToast = (msg) => {
     window.dispatchEvent(new CustomEvent('showToast', { detail: msg }));
   };
@@ -33,6 +49,7 @@ const Home = () => {
     if (!currentList.some(m => m.id === heroMovie.id)) {
       localStorage.setItem(key, JSON.stringify([...currentList, heroMovie]));
       showToast("Added to your Wishlist!");
+      window.dispatchEvent(new Event('wishlistUpdated'));
     } else {
       showToast("Already in your Wishlist!");
     }
@@ -136,11 +153,17 @@ const Home = () => {
                     className="bg-gradient-to-r from-steam-lightBlue to-steam-blue hover:from-steam-blue hover:to-white text-white px-8 py-3 rounded text-sm font-medium transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
                     Play Now
                   </button>
-                  <button 
-                    onClick={handleWishlistClick}
-                    className="bg-steam-panel border border-steam-muted hover:border-white text-white px-6 py-3 rounded text-sm font-medium transition-all hover:bg-steam-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue">
-                    + Add to Wishlist
-                  </button>
+                  {isHeroWishlisted ? (
+                    <div className="bg-steam-panel border border-white/10 text-steam-muted px-6 py-3 rounded text-sm font-medium flex items-center gap-2 cursor-default">
+                      <span>✓</span> In Wishlist
+                    </div>
+                  ) : (
+                    <button 
+                      onClick={handleWishlistClick}
+                      className="bg-steam-panel border border-steam-muted hover:border-white text-white px-6 py-3 rounded text-sm font-medium transition-all hover:bg-steam-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue">
+                      + Add to Wishlist
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -1,10 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { tmdb } from '../services/TMDBService';
 import { auth } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const MovieCard = ({ movie, onSelect }) => {
   const navigate = useNavigate();
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  useEffect(() => {
+    const checkWishlist = (user) => {
+      if (!user) {
+        setIsWishlisted(false);
+        return;
+      }
+      const list = JSON.parse(localStorage.getItem(`wishlist_${user.uid}`) || '[]');
+      setIsWishlisted(list.some(m => m.id === movie.id));
+    };
+
+    const unsubscribe = onAuthStateChanged(auth, checkWishlist);
+    
+    const handleUpdate = () => checkWishlist(auth.currentUser);
+    window.addEventListener('wishlistUpdated', handleUpdate);
+    
+    return () => {
+      unsubscribe();
+      window.removeEventListener('wishlistUpdated', handleUpdate);
+    };
+  }, [movie.id]);
 
   if (!movie) return null;
 
@@ -56,28 +79,33 @@ const MovieCard = ({ movie, onSelect }) => {
         </div>
 
         <div className="flex items-center justify-between mt-2 bg-steam-dark p-1 rounded">
-          <button 
-            className="bg-[#66c0f4] hover:bg-[#417a9b] text-white text-[10px] font-medium px-2 py-1 rounded transition-colors"
-            onClick={(e) => {
-              e.stopPropagation();
-              if (!auth.currentUser) {
-                navigate('/login');
-                return;
-              }
-              const uid = auth.currentUser.uid;
-              const key = `wishlist_${uid}`;
-              const currentList = JSON.parse(localStorage.getItem(key) || '[]');
-              
-              if (!currentList.some(m => m.id === movie.id)) {
-                localStorage.setItem(key, JSON.stringify([...currentList, movie]));
-                window.dispatchEvent(new CustomEvent('showToast', { detail: "Added to your Wishlist!" }));
-              } else {
-                window.dispatchEvent(new CustomEvent('showToast', { detail: "Already in your Wishlist!" }));
-              }
-            }}
-          >
-            + Wishlist
-          </button>
+          {isWishlisted ? (
+            <div className="bg-steam-panel text-steam-muted border border-white/10 text-[10px] font-medium px-2 py-1 rounded">
+              ✓ In Wishlist
+            </div>
+          ) : (
+            <button 
+              className="bg-[#66c0f4] hover:bg-[#417a9b] text-white text-[10px] font-medium px-2 py-1 rounded transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (!auth.currentUser) {
+                  navigate('/login');
+                  return;
+                }
+                const uid = auth.currentUser.uid;
+                const key = `wishlist_${uid}`;
+                const currentList = JSON.parse(localStorage.getItem(key) || '[]');
+                
+                if (!currentList.some(m => m.id === movie.id)) {
+                  localStorage.setItem(key, JSON.stringify([...currentList, movie]));
+                  window.dispatchEvent(new CustomEvent('showToast', { detail: "Added to your Wishlist!" }));
+                  window.dispatchEvent(new Event('wishlistUpdated'));
+                }
+              }}
+            >
+              + Wishlist
+            </button>
+          )}
           <div className="flex items-center">
             <span className="bg-steam-green text-black px-1.5 py-0.5 text-[10px] font-bold">-100%</span>
             <span className="px-1.5 text-[10px] text-steam-muted line-through">₹999</span>
