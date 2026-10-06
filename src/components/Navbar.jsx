@@ -43,9 +43,9 @@ const Navbar = () => {
             
             <nav className="hidden md:flex items-center gap-6 mt-1 font-semibold text-[15px] uppercase">
               <Link to="/" className="text-white border-b-2 border-[#1a9fff] pb-1">Store</Link>
-              <span className="text-[#b8b6b4] hover:text-white cursor-pointer transition-colors pb-1">Community</span>
-              <span className="text-[#b8b6b4] hover:text-white cursor-pointer transition-colors pb-1">About</span>
-              <span className="text-[#b8b6b4] hover:text-white cursor-pointer transition-colors pb-1">Support</span>
+              <Link to="/community" className="text-[#b8b6b4] hover:text-white cursor-pointer transition-colors pb-1">Community</Link>
+              <Link to="/about" className="text-[#b8b6b4] hover:text-white cursor-pointer transition-colors pb-1">About</Link>
+              <Link to="/support" className="text-[#b8b6b4] hover:text-white cursor-pointer transition-colors pb-1">Support</Link>
             </nav>
           </div>
 
