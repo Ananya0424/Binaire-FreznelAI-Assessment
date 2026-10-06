@@ -79,7 +79,8 @@ const Home = () => {
             <div className="bg-steam-panel w-full h-[400px] rounded animate-pulse border border-steam-lightBlue/20" />
           ) : (
             <div 
-              className="relative w-full h-[400px] md:h-[500px] rounded overflow-hidden group border border-steam-lightBlue/20 hover:border-steam-blue transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue"
+              key={heroMovie.id}
+              className="relative w-full h-[400px] md:h-[500px] rounded overflow-hidden group border border-steam-lightBlue/20 hover:border-steam-blue transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue animate-fade-in"
               tabIndex="0"
               aria-label={`Featured movie: ${heroMovie.title}`}
             >
