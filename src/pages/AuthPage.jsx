@@ -25,10 +25,11 @@ const AuthPage = () => {
       }
       navigate('/');
     } catch (err) {
-      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
+      const errMsg = err.message || '';
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || errMsg.includes('auth/invalid-credential') || errMsg.includes('auth/wrong-password')) {
         setError('Incorrect password');
       } else {
-        setError(err.message.replace('Firebase: ', ''));
+        setError(errMsg.replace('Firebase: ', ''));
       }
     } finally {
       setLoading(false);
