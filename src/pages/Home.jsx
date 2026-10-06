@@ -8,6 +8,7 @@ import { auth } from '../services/firebase';
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [heroMovie, setHeroMovie] = useState(null);
+  const [pendingAgeCheck, setPendingAgeCheck] = useState(null);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -69,9 +70,21 @@ const Home = () => {
     fetchMovies();
   }, [page, searchQuery]);
 
+  const handleMovieClick = (movie) => {
+    setPendingAgeCheck(movie);
+  };
+
+  const confirmAge = () => {
+    if (pendingAgeCheck) {
+      setHeroMovie(pendingAgeCheck);
+      setPendingAgeCheck(null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <Layout>
-      <div className="text-white space-y-8 pb-12">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 text-white space-y-8 pb-12">
         <section aria-label="Featured Movie">
           {!heroMovie ? (
             <div className="bg-steam-panel w-full h-[400px] rounded animate-pulse border border-steam-lightBlue/20" />
@@ -120,9 +133,9 @@ const Home = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {movies.map((movie, index) => {
               if (movies.length === index + 1) {
-                return <div ref={lastMovieElementRef} key={`${movie.id}-${index}`}><MovieCard movie={movie} onSelect={setHeroMovie} /></div>;
+                return <div ref={lastMovieElementRef} key={`${movie.id}-${index}`}><MovieCard movie={movie} onSelect={handleMovieClick} /></div>;
               } else {
-                return <MovieCard key={`${movie.id}-${index}`} movie={movie} onSelect={setHeroMovie} />;
+                return <MovieCard key={`${movie.id}-${index}`} movie={movie} onSelect={handleMovieClick} />;
               }
             })}
             
@@ -131,6 +144,34 @@ const Home = () => {
             ))}
           </div>
         </section>
+
+        {/* Age Check Modal */}
+        {pendingAgeCheck && (
+          <div className="fixed inset-0 bg-[#1b2838]/95 z-50 flex flex-col items-center justify-center p-4">
+            <div className="max-w-2xl w-full flex flex-col items-center text-center animate-fade-in">
+              <div className="mb-8 w-64 h-36 relative shadow-lg">
+                <img src={tmdb.getImageUrl(pendingAgeCheck.backdrop_path)} className="w-full h-full object-cover rounded" alt="Age check" />
+              </div>
+              <h2 className="text-[#acb2b8] text-lg mb-6">
+                This game may contain content not appropriate for all ages,<br/>
+                or may not be appropriate for viewing at work.
+              </h2>
+              <div className="bg-[#2a475e]/30 w-full p-8 rounded border border-[#2a475e] mb-6 shadow-xl">
+                <p className="text-[#acb2b8] mb-4 text-sm">Please enter your birth date to continue:</p>
+                <div className="flex justify-center gap-2 mb-8">
+                  <select className="bg-[#316282] text-white border-none p-1.5 rounded w-16 outline-none text-sm"><option>1</option></select>
+                  <select className="bg-[#316282] text-white border-none p-1.5 rounded w-32 outline-none text-sm"><option>January</option></select>
+                  <select className="bg-[#316282] text-white border-none p-1.5 rounded w-24 outline-none text-sm"><option>2026</option><option>2000</option></select>
+                </div>
+                <div className="flex justify-center gap-4">
+                  <button onClick={confirmAge} className="bg-[#2a475e] hover:bg-[#66c0f4] text-white px-6 py-2 rounded transition-colors text-sm font-medium">View Page</button>
+                  <button onClick={() => setPendingAgeCheck(null)} className="text-[#acb2b8] hover:text-white px-6 py-2 text-sm">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
     </Layout>
   );
