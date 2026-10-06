@@ -30,11 +30,11 @@ const Navbar = () => {
 
   return (
     <header className="w-full flex flex-col font-sans relative z-50">
-      {/* Top Global Bar */}
+
       <div className="bg-[#171a21] w-full">
         <div className="w-full px-4 md:px-8 flex items-center justify-between h-[104px]">
           
-          {/* Logo & Main Links */}
+
           <div className="flex items-center gap-10">
             <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-white tracking-widest uppercase">
               <span className="text-white text-4xl">🎥</span>
@@ -49,7 +49,7 @@ const Navbar = () => {
             </nav>
           </div>
 
-          {/* Top Right Actions */}
+
           <div className="flex flex-col items-end gap-1 h-full pt-2">
             <div className="flex items-center text-[11px] text-[#b8b6b4] gap-3">
               {user ? (
@@ -79,11 +79,11 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Sub Navigation Bar */}
+
       <div className="w-full shadow-lg" style={{ background: 'linear-gradient(to right, #202d39 0%, #111620 100%)' }}>
         <div className="w-full px-4 md:px-8 h-9 flex items-center justify-between">
           
-          {/* Sub Links */}
+
           <nav className="flex items-center gap-4 md:gap-6 text-[13px] text-white font-medium">
             <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Browse <ChevronDown className="w-3 h-3" /></Link>
             <Link to="/explore/new?title=Recommendations&q=best" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Recommendations <ChevronDown className="w-3 h-3" /></Link>
@@ -92,7 +92,7 @@ const Navbar = () => {
             <Link to="/explore/new?title=Special%20Sections&q=collection" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Special Sections <ChevronDown className="w-3 h-3" /></Link>
           </nav>
 
-          {/* Search Box */}
+
           <form onSubmit={handleSearch} className="flex items-center h-[26px]">
             <div className="bg-[#316282] border border-black/30 rounded-l px-3 h-full flex items-center focus-within:ring-1 focus-within:ring-[#66c0f4] transition-shadow">
               <input 

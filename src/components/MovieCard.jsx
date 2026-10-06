@@ -14,7 +14,7 @@ const MovieCard = ({ movie, onSelect }) => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }}
     >
-      {/* Main Poster Image */}
+
       <img 
         src={tmdb.getImageUrl(movie.poster_path)} 
         alt={movie.title}
@@ -22,13 +22,13 @@ const MovieCard = ({ movie, onSelect }) => {
         loading="lazy"
       />
 
-      {/* Steam-style Default Bottom Tag (visible when NOT hovered) */}
+
       <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/90 to-transparent group-hover:opacity-0 transition-opacity duration-300 flex items-end justify-between p-2">
          <span className="text-white text-xs font-semibold truncate max-w-[70%] drop-shadow-md">{movie.title}</span>
          <span className="bg-steam-green text-black px-1.5 py-0.5 text-[10px] font-bold rounded">NEW</span>
       </div>
 
-      {/* Hover Panel that slides up (Like your Steam screenshot) */}
+
       <div className="absolute bottom-0 left-0 w-full bg-[#1b2838] p-3 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300 ease-out shadow-[0_-10px_20px_rgba(0,0,0,0.5)]">
         <h3 className="text-white text-sm font-bold truncate mb-1">
           {movie.title}

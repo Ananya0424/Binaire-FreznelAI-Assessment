@@ -9,12 +9,12 @@ const Wishlist = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check auth state, if not logged in, redirect
+
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
         navigate('/login');
       } else {
-        // Load wishlist from local storage using user UID
+
         const savedList = JSON.parse(localStorage.getItem(`wishlist_${user.uid}`) || '[]');
         setWishlist(savedList);
       }
@@ -29,14 +29,14 @@ const Wishlist = () => {
   return (
     <Layout>
       <div className="max-w-5xl mx-auto pt-4">
-        {/* Breadcrumb */}
+
         <div className="text-[#8f98a0] text-xs mb-2 flex items-center gap-1">
           <span onClick={() => navigate('/')} className="hover:text-white cursor-pointer transition-colors">Home</span>
           <span>{'>'}</span>
           <span className="text-white">Your Wishlist</span>
         </div>
         
-        {/* Heading */}
+
         <h1 className="text-3xl text-white font-bold mb-6 tracking-wide">My Wishlist</h1>
         
         {wishlist.length === 0 ? (

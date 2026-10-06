@@ -165,7 +165,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Age Check Modal */}
+
         {pendingAgeCheck && (
           <div className="fixed inset-0 bg-[#1b2838]/95 z-50 flex flex-col items-center justify-center p-4">
             <div className="max-w-2xl w-full flex flex-col items-center text-center animate-fade-in">
@@ -204,7 +204,7 @@ const Home = () => {
           </div>
         )}
 
-        {/* Toast Notification */}
+
         {toastMessage && (
           <div className="fixed top-24 right-4 bg-steam-panel border-l-4 border-[#66c0f4] text-white p-4 shadow-2xl rounded z-[9999] animate-slide-in-right">
             {toastMessage}
