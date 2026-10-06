@@ -151,10 +151,9 @@ const Home = () => {
                 alt={heroMovie.title}
                 className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
-              {/* Darker Overlays */}
-              <div className="absolute inset-0 bg-black/40" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#1b2838] via-[#1b2838]/80 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1b2838] via-transparent to-transparent opacity-90" />
+              {/* Text-readable Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#1b2838] via-[#1b2838]/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1b2838] via-transparent to-transparent opacity-70" />
               
               {/* Constrained Text Container matching grid alignment */}
               <div className="absolute inset-0 max-w-[1400px] mx-auto px-4 md:px-8">
