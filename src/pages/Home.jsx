@@ -9,7 +9,9 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const [heroMovie, setHeroMovie] = useState(null);
   const [pendingAgeCheck, setPendingAgeCheck] = useState(null);
-  const [birthYear, setBirthYear] = useState('2026');
+  const [birthYear, setBirthYear] = useState('2000');
+  const [birthMonth, setBirthMonth] = useState('January');
+  const [birthDay, setBirthDay] = useState('1');
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -179,21 +181,67 @@ const Home = () => {
               <div className="bg-[#2a475e]/30 w-full p-8 rounded border border-[#2a475e] mb-6 shadow-xl">
                 <p className="text-[#acb2b8] mb-4 text-sm">Please enter your birth date to continue:</p>
                 <div className="flex justify-center gap-2 mb-8">
-                  <select className="bg-[#316282] text-white border-none p-1.5 rounded w-16 outline-none text-sm">
-                    {Array.from({length: 31}, (_, i) => <option key={i+1}>{i+1}</option>)}
-                  </select>
-                  <select className="bg-[#316282] text-white border-none p-1.5 rounded w-32 outline-none text-sm">
-                    {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(m => <option key={m}>{m}</option>)}
-                  </select>
-                  <select 
-                    value={birthYear}
-                    onChange={(e) => setBirthYear(e.target.value)}
-                    className="bg-[#316282] text-white border-none p-1.5 rounded w-24 outline-none text-sm"
-                  >
-                    {Array.from({length: 40}, (_, i) => 2026 - i).map(year => (
-                      <option key={year} value={year}>{year}</option>
-                    ))}
-                  </select>
+                  
+                  {/* Custom Dropdown for Day */}
+                  <div className="relative">
+                    <div 
+                      onClick={() => setPendingAgeCheck({...pendingAgeCheck, openDropdown: pendingAgeCheck.openDropdown === 'day' ? null : 'day'})}
+                      className="bg-[#316282] text-white p-1.5 rounded w-16 text-sm cursor-pointer flex justify-between items-center"
+                    >
+                      <span>{birthDay}</span> <span className="text-[10px]">▼</span>
+                    </div>
+                    {pendingAgeCheck.openDropdown === 'day' && (
+                      <>
+                        <div className="fixed inset-0 z-40" onClick={() => setPendingAgeCheck({...pendingAgeCheck, openDropdown: null})}></div>
+                        <div className="absolute top-full left-0 mt-1 w-full bg-[#1b2838] border border-[#316282] rounded shadow-xl z-50 max-h-40 overflow-y-auto">
+                          {Array.from({length: 31}, (_, i) => i + 1).map(d => (
+                            <div key={d} onClick={() => { setBirthDay(d); setPendingAgeCheck({...pendingAgeCheck, openDropdown: null}); }} className="p-1.5 text-sm hover:bg-[#316282] cursor-pointer">{d}</div>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Custom Dropdown for Month */}
+                  <div className="relative">
+                    <div 
+                      onClick={() => setPendingAgeCheck({...pendingAgeCheck, openDropdown: pendingAgeCheck.openDropdown === 'month' ? null : 'month'})}
+                      className="bg-[#316282] text-white p-1.5 rounded w-32 text-sm cursor-pointer flex justify-between items-center"
+                    >
+                      <span>{birthMonth}</span> <span className="text-[10px]">▼</span>
+                    </div>
+                    {pendingAgeCheck.openDropdown === 'month' && (
+                      <>
+                        <div className="fixed inset-0 z-40" onClick={() => setPendingAgeCheck({...pendingAgeCheck, openDropdown: null})}></div>
+                        <div className="absolute top-full left-0 mt-1 w-full bg-[#1b2838] border border-[#316282] rounded shadow-xl z-50 max-h-40 overflow-y-auto">
+                          {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(m => (
+                            <div key={m} onClick={() => { setBirthMonth(m); setPendingAgeCheck({...pendingAgeCheck, openDropdown: null}); }} className="p-1.5 text-sm hover:bg-[#316282] cursor-pointer">{m}</div>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Custom Dropdown for Year */}
+                  <div className="relative">
+                    <div 
+                      onClick={() => setPendingAgeCheck({...pendingAgeCheck, openDropdown: pendingAgeCheck.openDropdown === 'year' ? null : 'year'})}
+                      className="bg-[#316282] text-white p-1.5 rounded w-24 text-sm cursor-pointer flex justify-between items-center"
+                    >
+                      <span>{birthYear}</span> <span className="text-[10px]">▼</span>
+                    </div>
+                    {pendingAgeCheck.openDropdown === 'year' && (
+                      <>
+                        <div className="fixed inset-0 z-40" onClick={() => setPendingAgeCheck({...pendingAgeCheck, openDropdown: null})}></div>
+                        <div className="absolute top-full left-0 mt-1 w-full bg-[#1b2838] border border-[#316282] rounded shadow-xl z-50 max-h-40 overflow-y-auto">
+                          {Array.from({length: 40}, (_, i) => 2026 - i).map(y => (
+                            <div key={y} onClick={() => { setBirthYear(y); setPendingAgeCheck({...pendingAgeCheck, openDropdown: null}); }} className="p-1.5 text-sm hover:bg-[#316282] cursor-pointer">{y}</div>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+
                 </div>
                 <div className="flex justify-center gap-4">
                   <button onClick={confirmAge} className="bg-[#2a475e] hover:bg-[#66c0f4] text-white px-6 py-2 rounded transition-colors text-sm font-medium">View Page</button>
