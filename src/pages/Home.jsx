@@ -142,14 +142,14 @@ const Home = () => {
           ) : (
             <div 
               key={heroMovie.id}
-              className="relative w-full h-[50vh] min-h-[400px] md:h-[70vh] md:min-h-[600px] group border-b border-steam-lightBlue/20 hover:border-steam-blue transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue animate-fade-in"
+              className="relative w-full h-[50vh] min-h-[400px] md:h-[70vh] md:min-h-[600px] overflow-hidden group border-b border-steam-lightBlue/20 hover:border-steam-blue transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue animate-fade-in"
               tabIndex="0"
               aria-label={`Featured movie: ${heroMovie.title}`}
             >
               <img 
                 src={tmdb.getImageUrl(heroMovie.backdrop_path, true)} 
                 alt={heroMovie.title}
-                className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
               {/* Darker Overlays */}
               <div className="absolute inset-0 bg-black/40" />
