@@ -144,7 +144,7 @@ const Navbar = () => {
               </button>
             </form>
 
-            {/* Live Search Suggestions Dropdown */}
+            
             {showSuggestions && suggestions.length > 0 && (
               <div className="absolute top-full right-0 w-full mt-1 bg-[#3d4450] shadow-2xl rounded overflow-hidden z-[9999] border border-black/50">
                 {suggestions.map((movie) => (

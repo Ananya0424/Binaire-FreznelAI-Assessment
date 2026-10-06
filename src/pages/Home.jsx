@@ -135,7 +135,7 @@ const Home = () => {
   return (
     <Layout>
       <div className="text-white pb-12 w-full">
-        {/* Full width Hero Section */}
+        
         <section aria-label="Featured Movie" className="w-full">
           {!heroMovie ? (
             <div className="bg-steam-panel w-full h-[400px] md:h-[550px] animate-pulse border-b border-steam-lightBlue/20" />
@@ -151,11 +151,11 @@ const Home = () => {
                 alt={heroMovie.title}
                 className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
-              {/* Text-readable Overlays */}
+              
               <div className="absolute inset-0 bg-gradient-to-r from-[#1b2838] via-[#1b2838]/60 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1b2838] via-transparent to-transparent opacity-70" />
               
-              {/* Constrained Text Container matching grid alignment */}
+              
               <div className="absolute inset-0 max-w-[1400px] mx-auto px-4 md:px-8">
                 <div className="absolute bottom-8 md:bottom-16 left-4 md:left-8 w-full md:w-2/3 max-w-2xl">
                   <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg text-white">{heroMovie.title}</h1>
@@ -188,7 +188,7 @@ const Home = () => {
           )}
         </section>
 
-        {/* Constrained width for grid */}
+        
         <div className="max-w-[1400px] mx-auto px-4 md:px-8 space-y-8 mt-12">
           <section aria-label="Popular Movies">
           <div className="flex items-center justify-between mb-4">
@@ -225,7 +225,7 @@ const Home = () => {
                 <p className="text-[#acb2b8] mb-4 text-sm">Please enter your birth date to continue:</p>
                 <div className="flex justify-center gap-2 mb-8">
                   
-                  {/* Custom Dropdown for Day */}
+                  
                   <div className="relative">
                     <div 
                       onClick={() => setPendingAgeCheck({...pendingAgeCheck, openDropdown: pendingAgeCheck.openDropdown === 'day' ? null : 'day'})}
@@ -245,7 +245,7 @@ const Home = () => {
                     )}
                   </div>
 
-                  {/* Custom Dropdown for Month */}
+                  
                   <div className="relative">
                     <div 
                       onClick={() => setPendingAgeCheck({...pendingAgeCheck, openDropdown: pendingAgeCheck.openDropdown === 'month' ? null : 'month'})}
@@ -265,7 +265,7 @@ const Home = () => {
                     )}
                   </div>
 
-                  {/* Custom Dropdown for Year */}
+                  
                   <div className="relative">
                     <div 
                       onClick={() => setPendingAgeCheck({...pendingAgeCheck, openDropdown: pendingAgeCheck.openDropdown === 'year' ? null : 'year'})}
