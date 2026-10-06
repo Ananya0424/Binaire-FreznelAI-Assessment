@@ -73,8 +73,6 @@ const Home = () => {
     <Layout>
       <div className="text-white space-y-8 pb-12">
         <section aria-label="Featured Movie">
-          <h2 className="text-xl mb-4 font-light tracking-wide uppercase text-steam-text">Featured & Recommended</h2>
-          
           {!heroMovie ? (
             <div className="bg-steam-panel w-full h-[400px] rounded animate-pulse border border-steam-lightBlue/20" />
           ) : (
