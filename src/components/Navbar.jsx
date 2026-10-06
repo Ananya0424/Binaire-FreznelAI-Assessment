@@ -90,7 +90,17 @@ const Navbar = () => {
           <nav className="flex items-center gap-4 md:gap-6 text-[13px] text-white font-medium">
             <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Browse <ChevronDown className="w-3 h-3" /></Link>
             <Link to="/explore/new?title=Recommendations&q=best" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Recommendations <ChevronDown className="w-3 h-3" /></Link>
-            <Link to="/explore/new?title=Horror%20%26%20Action&q=horror" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Categories <ChevronDown className="w-3 h-3" /></Link>
+            <div className="group relative z-50">
+              <span className="flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">
+                Categories <ChevronDown className="w-3 h-3" />
+              </span>
+              <div className="absolute top-full left-0 mt-2 w-32 bg-[#3d4450] text-[#b8b6b4] shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all rounded py-1">
+                <Link to="/explore/new?title=Action&q=action" className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Action</Link>
+                <Link to="/explore/new?title=Horror&q=horror" className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Horror</Link>
+                <Link to="/explore/new?title=Comedy&q=comedy" className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Comedy</Link>
+                <Link to="/explore/new?title=Sci-Fi&q=sci-fi" className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Sci-Fi</Link>
+              </div>
+            </div>
             <Link to="/explore/new?title=Ways%20to%20Play&q=game" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Ways to Play <ChevronDown className="w-3 h-3" /></Link>
             <Link to="/explore/new?title=Special%20Sections&q=collection" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Special Sections <ChevronDown className="w-3 h-3" /></Link>
           </nav>
