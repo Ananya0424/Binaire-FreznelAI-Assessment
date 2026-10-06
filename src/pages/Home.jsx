@@ -37,6 +37,17 @@ const Home = () => {
     window.dispatchEvent(new CustomEvent('showToast', { detail: msg }));
   };
 
+  const handleRemoveWishlist = () => {
+    if (!auth.currentUser || !heroMovie) return;
+    const uid = auth.currentUser.uid;
+    const key = `wishlist_${uid}`;
+    const currentList = JSON.parse(localStorage.getItem(key) || '[]');
+    const updated = currentList.filter(m => m.id !== heroMovie.id);
+    localStorage.setItem(key, JSON.stringify(updated));
+    showToast("Removed from Wishlist!");
+    window.dispatchEvent(new Event('wishlistUpdated'));
+  };
+
   const handleWishlistClick = () => {
     if (!auth.currentUser) {
       navigate('/login');
@@ -131,7 +142,7 @@ const Home = () => {
           ) : (
             <div 
               key={heroMovie.id}
-              className="relative w-full h-[400px] md:h-[600px] group border-b border-steam-lightBlue/20 hover:border-steam-blue transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue animate-fade-in"
+              className="relative w-full h-[50vh] min-h-[400px] md:h-[70vh] md:min-h-[600px] group border-b border-steam-lightBlue/20 hover:border-steam-blue transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue animate-fade-in"
               tabIndex="0"
               aria-label={`Featured movie: ${heroMovie.title}`}
             >
@@ -140,31 +151,38 @@ const Home = () => {
                 alt={heroMovie.title}
                 className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />
+              {/* Darker Overlays */}
+              <div className="absolute inset-0 bg-black/40" />
               <div className="absolute inset-0 bg-gradient-to-r from-[#1b2838] via-[#1b2838]/80 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1b2838] via-transparent to-transparent opacity-90" />
               
-              <div className="absolute bottom-0 left-0 p-8 md:p-16 w-full md:w-1/2 max-w-[1400px] mx-auto right-0">
-                <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg text-white">{heroMovie.title}</h1>
-                <p className="text-[#acb2b8] text-sm md:text-lg line-clamp-3 mb-8 max-w-xl">
-                  {heroMovie.overview}
-                </p>
-                <div className="flex items-center gap-4">
-                  <button 
-                    onClick={handlePlayClick}
-                    className="bg-gradient-to-r from-steam-lightBlue to-steam-blue hover:from-steam-blue hover:to-white text-white px-8 py-3 rounded text-sm font-medium transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
-                    Play Now
-                  </button>
-                  {isHeroWishlisted ? (
-                    <div className="bg-steam-panel border border-white/10 text-steam-muted px-6 py-3 rounded text-sm font-medium flex items-center gap-2 cursor-default">
-                      <span>✓</span> In Wishlist
-                    </div>
-                  ) : (
+              {/* Constrained Text Container matching grid alignment */}
+              <div className="absolute inset-0 max-w-[1400px] mx-auto px-4 md:px-8">
+                <div className="absolute bottom-8 md:bottom-16 left-4 md:left-8 w-full md:w-2/3 max-w-2xl">
+                  <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg text-white">{heroMovie.title}</h1>
+                  <p className="text-[#acb2b8] text-sm md:text-lg line-clamp-3 mb-8 max-w-xl">
+                    {heroMovie.overview}
+                  </p>
+                  <div className="flex items-center gap-4">
                     <button 
-                      onClick={handleWishlistClick}
-                      className="bg-steam-panel border border-steam-muted hover:border-white text-white px-6 py-3 rounded text-sm font-medium transition-all hover:bg-steam-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue">
-                      + Add to Wishlist
+                      onClick={handlePlayClick}
+                      className="bg-gradient-to-r from-steam-lightBlue to-steam-blue hover:from-steam-blue hover:to-white text-white px-8 py-3 rounded text-sm font-medium transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                      Play Now
                     </button>
-                  )}
+                    {isHeroWishlisted ? (
+                      <button 
+                        onClick={handleRemoveWishlist}
+                        className="bg-steam-panel border border-white/20 hover:border-red-500 hover:text-red-400 text-steam-muted px-6 py-3 rounded text-sm font-medium flex items-center gap-2 transition-colors">
+                        <span>✓</span> In Wishlist
+                      </button>
+                    ) : (
+                      <button 
+                        onClick={handleWishlistClick}
+                        className="bg-steam-panel border border-steam-muted hover:border-white text-white px-6 py-3 rounded text-sm font-medium transition-all hover:bg-steam-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-steam-blue">
+                        + Add to Wishlist
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

@@ -80,9 +80,21 @@ const MovieCard = ({ movie, onSelect }) => {
 
         <div className="flex items-center justify-between mt-2 bg-steam-dark p-1 rounded">
           {isWishlisted ? (
-            <div className="bg-steam-panel text-steam-muted border border-white/10 text-[10px] font-medium px-2 py-1 rounded">
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                if (!auth.currentUser) return;
+                const uid = auth.currentUser.uid;
+                const key = `wishlist_${uid}`;
+                const currentList = JSON.parse(localStorage.getItem(key) || '[]');
+                const updated = currentList.filter(m => m.id !== movie.id);
+                localStorage.setItem(key, JSON.stringify(updated));
+                window.dispatchEvent(new CustomEvent('showToast', { detail: "Removed from Wishlist!" }));
+                window.dispatchEvent(new Event('wishlistUpdated'));
+              }}
+              className="bg-steam-panel hover:bg-[#3d4450] hover:text-red-400 text-steam-muted border border-white/10 text-[10px] font-medium px-2 py-1 rounded transition-colors">
               ✓ In Wishlist
-            </div>
+            </button>
           ) : (
             <button 
               className="bg-[#66c0f4] hover:bg-[#417a9b] text-white text-[10px] font-medium px-2 py-1 rounded transition-colors"
