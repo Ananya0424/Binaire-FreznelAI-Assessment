@@ -58,9 +58,9 @@ const Navbar = () => {
         <div className="w-full px-4 md:px-8 flex items-center justify-between h-[104px]">
           
 
-          <div className="flex items-center gap-10">
-            <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-white tracking-widest uppercase">
-              <span className="text-white text-4xl">🎥</span>
+          <div className="flex items-center gap-4 md:gap-10">
+            <Link to="/" className="flex items-center gap-1 md:gap-2 text-lg md:text-2xl font-bold text-white tracking-widest uppercase">
+              <span className="text-white text-2xl md:text-4xl">🎥</span>
               FREZNEL
             </Link>
             
@@ -74,10 +74,10 @@ const Navbar = () => {
 
 
           <div className="flex flex-col items-end gap-1 h-full pt-2">
-            <div className="flex items-center text-[11px] text-[#b8b6b4] gap-3">
+            <div className="flex items-center text-[10px] md:text-[11px] text-[#b8b6b4] gap-1.5 md:gap-3">
               {user ? (
                 <>
-                  <span className="text-[#b8b6b4] lowercase">{user.email}</span>
+                  <span className="text-[#b8b6b4] lowercase truncate max-w-[80px] md:max-w-none">{user.email}</span>
                   <span>|</span>
                   <Link to="/wishlist" className="hover:text-white cursor-pointer lowercase font-bold text-[#66c0f4]">wishlist</Link>
                   <span>|</span>
@@ -89,7 +89,7 @@ const Navbar = () => {
               <span>|</span>
               <div className="group relative">
                 <span className="hover:text-white cursor-pointer flex items-center gap-1 lowercase">
-                  language <ChevronDown className="w-3 h-3" />
+                  lang <span className="hidden md:inline">uage</span> <ChevronDown className="w-3 h-3" />
                 </span>
                 <div className="absolute right-0 top-full mt-2 w-32 bg-[#3d4450] text-[#b8b6b4] shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 rounded">
                   <div className="px-4 py-2 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-xs font-bold text-white bg-[#1b2838]">
@@ -104,10 +104,10 @@ const Navbar = () => {
 
 
       <div className="w-full shadow-lg" style={{ background: 'linear-gradient(to right, #202d39 0%, #111620 100%)' }}>
-        <div className="w-full px-4 md:px-8 h-9 flex items-center justify-between">
+        <div className="w-full px-4 md:px-8 py-2 md:py-0 h-auto md:h-9 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-0">
           
 
-          <nav className="flex items-center gap-4 md:gap-6 text-[13px] text-white font-medium">
+          <nav className="flex items-center gap-4 md:gap-6 text-[13px] text-white font-medium overflow-x-auto whitespace-nowrap no-scrollbar pb-1 md:pb-0 flex-nowrap w-full md:w-auto flex-1">
             <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Browse <ChevronDown className="w-3 h-3" /></Link>
             <Link to="/explore/new?title=Recommendations&q=best" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Recommendations <ChevronDown className="w-3 h-3" /></Link>
             <div className="group relative z-50">
@@ -126,9 +126,9 @@ const Navbar = () => {
           </nav>
 
 
-          <div className="relative">
-            <form onSubmit={handleSearch} className="flex items-center h-[32px]">
-              <div className="bg-[#316282] border border-black/30 rounded-l px-3 h-full flex items-center focus-within:ring-1 focus-within:ring-[#66c0f4] transition-shadow">
+          <div className="relative w-full md:w-auto">
+            <form onSubmit={handleSearch} className="flex items-center h-[32px] w-full">
+              <div className="bg-[#316282] border border-black/30 rounded-l px-3 h-full flex items-center focus-within:ring-1 focus-within:ring-[#66c0f4] transition-shadow flex-1">
                 <input 
                   type="text" 
                   placeholder="Search the store" 
@@ -136,7 +136,7 @@ const Navbar = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => { if (suggestions.length > 0) setShowSuggestions(true); }}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                  className="bg-transparent border-none text-white text-sm outline-none w-56 md:w-[280px] placeholder:italic placeholder-white/50"
+                  className="bg-transparent border-none text-white text-sm outline-none w-full md:w-[280px] placeholder:italic placeholder-white/50"
                 />
               </div>
               <button type="submit" className="bg-[#66c0f4] hover:bg-[#417a9b] h-full px-3 rounded-r flex items-center justify-center transition-colors">

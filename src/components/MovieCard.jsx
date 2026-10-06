@@ -78,7 +78,7 @@ const MovieCard = ({ movie, onSelect }) => {
           <span className="bg-steam-dark px-1.5 py-0.5 rounded text-[10px] text-steam-muted border border-white/5">Cinema</span>
         </div>
 
-        <div className="flex items-center justify-between mt-2 bg-steam-dark p-1 rounded">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-0 mt-2 bg-steam-dark p-1 rounded">
           {isWishlisted ? (
             <button 
               onClick={(e) => {
@@ -92,12 +92,12 @@ const MovieCard = ({ movie, onSelect }) => {
                 window.dispatchEvent(new CustomEvent('showToast', { detail: "Removed from Wishlist!" }));
                 window.dispatchEvent(new Event('wishlistUpdated'));
               }}
-              className="bg-steam-panel hover:bg-[#3d4450] hover:text-red-400 text-steam-muted border border-white/10 text-[10px] font-medium px-2 py-1 rounded transition-colors">
+              className="bg-steam-panel hover:bg-[#3d4450] hover:text-red-400 text-steam-muted border border-white/10 text-[10px] font-medium px-2 py-1 rounded transition-colors whitespace-nowrap w-full sm:w-auto text-left sm:text-center">
               ✓ In Wishlist
             </button>
           ) : (
             <button 
-              className="bg-[#66c0f4] hover:bg-[#417a9b] text-white text-[10px] font-medium px-2 py-1 rounded transition-colors"
+              className="bg-[#66c0f4] hover:bg-[#417a9b] text-white text-[10px] font-medium px-2 py-1 rounded transition-colors whitespace-nowrap w-full sm:w-auto text-left sm:text-center"
               onClick={(e) => {
                 e.stopPropagation();
                 if (!auth.currentUser) {
@@ -118,7 +118,7 @@ const MovieCard = ({ movie, onSelect }) => {
               + Wishlist
             </button>
           )}
-          <div className="flex items-center">
+          <div className="flex items-center w-full sm:w-auto justify-end">
             <span className="bg-steam-green text-black px-1.5 py-0.5 text-[10px] font-bold">-100%</span>
             <span className="px-1.5 text-[10px] text-steam-muted line-through">₹999</span>
             <span className="text-steam-blue text-[10px] font-bold pr-1">Free</span>

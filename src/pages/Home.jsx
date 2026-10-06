@@ -157,12 +157,12 @@ const Home = () => {
               
               
               <div className="absolute inset-0 max-w-[1400px] mx-auto px-4 md:px-8">
-                <div className="absolute bottom-8 md:bottom-16 left-4 md:left-8 w-full md:w-2/3 max-w-2xl">
+                <div className="absolute bottom-8 md:bottom-16 left-4 md:left-8 w-[calc(100%-2rem)] md:w-2/3 max-w-2xl">
                   <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg text-white">{heroMovie.title}</h1>
                   <p className="text-[#acb2b8] text-sm md:text-lg line-clamp-3 mb-8 max-w-xl">
                     {heroMovie.overview}
                   </p>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 md:gap-4 flex-wrap">
                     <button 
                       onClick={handlePlayClick}
                       className="bg-gradient-to-r from-steam-lightBlue to-steam-blue hover:from-steam-blue hover:to-white text-white px-8 py-3 rounded text-sm font-medium transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
