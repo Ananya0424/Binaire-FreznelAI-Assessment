@@ -107,7 +107,7 @@ const Navbar = () => {
         <div className="w-full px-4 md:px-8 py-2 md:py-0 h-auto md:h-9 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-0">
           
 
-          <nav className="flex items-center gap-4 md:gap-6 text-[13px] text-white font-medium overflow-x-auto whitespace-nowrap no-scrollbar pb-1 md:pb-0 flex-nowrap w-full md:w-auto flex-1">
+          <nav className="flex items-center gap-4 md:gap-6 text-[13px] text-white font-medium flex-wrap md:flex-nowrap pb-1 md:pb-0 w-full md:w-auto flex-1">
             <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Browse <ChevronDown className="w-3 h-3" /></Link>
             <Link to="/explore/new?title=Recommendations&q=best" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Recommendations <ChevronDown className="w-3 h-3" /></Link>
             <div className="group relative z-50">
