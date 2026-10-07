@@ -10,6 +10,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -110,14 +111,17 @@ const Navbar = () => {
             <Link to="/explore/new" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Browse <ChevronDown className="w-3 h-3" /></Link>
             <Link to="/explore/new?title=Recommendations&q=best" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Recommendations <ChevronDown className="w-3 h-3" /></Link>
             <div className="group relative z-50">
-              <span className="flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">
+              <span 
+                onClick={() => setShowCategories(!showCategories)}
+                className="flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors"
+              >
                 Categories <ChevronDown className="w-3 h-3" />
               </span>
-              <div className="absolute top-full left-0 mt-2 w-32 bg-[#3d4450] text-[#b8b6b4] shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all rounded py-1">
-                <Link to="/explore/new?title=Action&q=action" className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Action</Link>
-                <Link to="/explore/new?title=Horror&q=horror" className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Horror</Link>
-                <Link to="/explore/new?title=Comedy&q=comedy" className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Comedy</Link>
-                <Link to="/explore/new?title=Sci-Fi&q=sci-fi" className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Sci-Fi</Link>
+              <div className={`absolute top-full left-0 mt-2 w-32 bg-[#3d4450] text-[#b8b6b4] shadow-xl transition-all rounded py-1 z-[9999] ${showCategories ? 'opacity-100 visible' : 'opacity-0 invisible md:group-hover:opacity-100 md:group-hover:visible'}`}>
+                <Link to="/explore/new?title=Action&q=action" onClick={() => setShowCategories(false)} className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Action</Link>
+                <Link to="/explore/new?title=Horror&q=horror" onClick={() => setShowCategories(false)} className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Horror</Link>
+                <Link to="/explore/new?title=Comedy&q=comedy" onClick={() => setShowCategories(false)} className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Comedy</Link>
+                <Link to="/explore/new?title=Sci-Fi&q=sci-fi" onClick={() => setShowCategories(false)} className="block px-4 py-1.5 hover:bg-[#1b2838] hover:text-white transition-colors cursor-pointer text-sm">Sci-Fi</Link>
               </div>
             </div>
             <Link to="/explore/new?title=Ways%20to%20Play&q=game" className="group relative flex items-center gap-1 cursor-pointer hover:text-steam-blue transition-colors">Ways to Play <ChevronDown className="w-3 h-3" /></Link>
